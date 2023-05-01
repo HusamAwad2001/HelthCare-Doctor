@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:helth_care_doctor/constants/app_themes.dart';
 import 'package:helth_care_doctor/constants/constants.dart';
 import '../routes/pages.dart';
 import '../routes/routes.dart';
@@ -18,6 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.light,
       theme: ThemeData(
+        fontFamily: 'Expo',
         primaryColor: primaryColor,
         textTheme: Theme.of(context).textTheme.apply(displayColor: textColor),
         elevatedButtonTheme: ElevatedButtonThemeData(

@@ -22,10 +22,10 @@ const requiredField = "This field is required";
 
 final passwordValidator = MultiValidator(
   [
-    RequiredValidator(errorText: 'password is required'),
-    MinLengthValidator(8, errorText: 'password must be at least 8 digits long'),
+    RequiredValidator(errorText: 'كلمة المرور مطلوبة'),
+    MinLengthValidator(8, errorText: 'يجب أن تتكون كلمة المرور من 8 أرقام على الأقل'),
     PatternValidator(r'(?=.*?[#?!@$%^&*-])',
-        errorText: 'passwords must have at least one special character')
+        errorText: 'يجب أن تحتوي كلمات المرور على حرف واحد على الأقل')
   ],
 );
 

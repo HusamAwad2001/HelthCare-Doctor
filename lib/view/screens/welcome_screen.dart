@@ -1,8 +1,11 @@
 import 'package:get/get.dart';
 
+import '../../constants/app_styles.dart';
 import '../../constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+
+import '../../routes/routes.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -33,11 +36,14 @@ class WelcomeScreen extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => Get.toNamed(Routes.registerScreen),
                       style: TextButton.styleFrom(
                         backgroundColor: const Color(0xFF6CD8D1),
                       ),
-                      child: const Text("Sign Up"),
+                      child: Text(
+                        "تسجيل حساب",
+                        style: getRegularStyle(),
+                      ),
                     ),
                   ),
                   Padding(
@@ -46,7 +52,7 @@ class WelcomeScreen extends StatelessWidget {
                     child: SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () => Get.toNamed(Routes.loginScreen),
                         style: TextButton.styleFrom(
                           // backgroundColor: Color(0xFF6CD8D1),
                           elevation: 0,
@@ -55,7 +61,10 @@ class WelcomeScreen extends StatelessWidget {
                             side: BorderSide(color: Color(0xFF6CD8D1)),
                           ),
                         ),
-                        child: const Text("Sign In"),
+                        child: Text(
+                          "تسجيل الدخول",
+                          style: getRegularStyle(),
+                        ),
                       ),
                     ),
                   ),
