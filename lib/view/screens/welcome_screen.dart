@@ -28,9 +28,10 @@ class WelcomeScreen extends StatelessWidget {
               child: Column(
                 children: [
                   const Spacer(),
-                  SvgPicture.asset(
-                    "assets/icons/gerda_logo.svg",
-                  ),
+                  // SvgPicture.asset(
+                  //   "assets/icons/gerda_logo.svg",
+                  // ),
+                  Text('الرعاية الصحية',style: getBoldStyle(fontSize: 26)),
                   const Spacer(),
                   // As you can see we need more paddind on our btn
                   SizedBox(

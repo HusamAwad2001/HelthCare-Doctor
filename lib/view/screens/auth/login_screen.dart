@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:helth_care_doctor/view/screens/auth/register_screen.dart';
+import '../../../constants/app_styles.dart';
 import '../../../constants/constants.dart';
 import 'components/login_form.dart';
 
@@ -11,19 +12,21 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // But still same problem, let's fixed it
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          SvgPicture.asset(
-            "assets/icons/Sign_Up_bg.svg",
-            height: MediaQuery.of(context).size.height,
-            // Now it takes 100% of our height
-          ),
-          Padding(
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        SvgPicture.asset(
+          "assets/icons/Sign_Up_bg.svg",
+          fit: BoxFit.cover,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          // Now it takes 100% of our height
+        ),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Padding(
             padding:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
+            EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
             child: SafeArea(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
@@ -31,15 +34,18 @@ class LoginScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Sign In",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline5!
-                          .copyWith(fontWeight: FontWeight.bold),
+                      "تسجيل الدخول",
+                      style: getBoldStyle(
+                        fontSize: 20,
+                        color: Colors.black,
+                      ),
                     ),
                     Row(
                       children: [
-                        Text("Don't have an account?"),
+                        Text("ليس لديك حساب؟",style: getRegularStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                        ),),
                         TextButton(
                           onPressed: () => Navigator.push(
                             context,
@@ -48,8 +54,11 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            "Sign Up!",
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            "سجل الآن!",
+                            style: getBoldStyle(
+                              color: primaryColor,
+                              fontSize: 12,
+                            ),
                           ),
                         ),
                       ],
@@ -68,7 +77,7 @@ class LoginScreen extends StatelessWidget {
                             //  Sign in also done
                           }
                         },
-                        child: Text("Sign In"),
+                        child: Text("تسجيل الدخول",style: getBoldStyle(fontSize: 15),),
                       ),
                     ),
                   ],
@@ -76,8 +85,8 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

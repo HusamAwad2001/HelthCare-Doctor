@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import '../../../../constants/app_styles.dart';
 import '../../../../constants/constants.dart';
 import 'register_form.dart';
 
@@ -20,19 +21,25 @@ class LoginForm extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextFieldName(text: "Email"),
+          TextFieldName(text: "البريد الإلكتروني"),
           TextFormField(
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(hintText: "test@email.com"),
-            validator: EmailValidator(errorText: "Use a valid email!"),
+            validator: EmailValidator(errorText: "استخدم بريدًا إلكترونيًا صالحًا!"),
             onSaved: (email) => _email = email!,
           ),
           const SizedBox(height: defaultPadding),
-          TextFieldName(text: "Password"),
+          TextFieldName(text: "كلمة المرور"),
           TextFormField(
             // We want to hide our password
             obscureText: true,
-            decoration: InputDecoration(hintText: "******"),
+            decoration: InputDecoration(hintText: "******",hintStyle: getLightStyle(
+              color: Colors.black54,
+              fontSize: 15,
+            ),),
+            style: getLightStyle(
+              color: Colors.black,
+            ),
             validator: passwordValidator,
             onSaved: (password) => _password = password!,
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:helth_care_doctor/constants/app_styles.dart';
@@ -15,6 +16,7 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // But still same problem, let's fixed it
     return Stack(
+      fit: StackFit.expand,
       children: [
         SvgPicture.asset(
           "assets/icons/Sign_Up_bg.svg",
@@ -22,8 +24,19 @@ class RegisterScreen extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           // Now it takes 100% of our height
         ),
+        Container(color: Colors.black.withOpacity(0.2)),
         Scaffold(
           backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            toolbarHeight: 0,
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarColor: Colors.transparent,
+              statusBarBrightness: Brightness.light,
+              statusBarIconBrightness: Brightness.dark,
+            ),
+          ),
           body: Center(
             child: SafeArea(
               child: SingleChildScrollView(

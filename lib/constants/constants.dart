@@ -11,7 +11,7 @@ const defaultPadding = 16.0;
 
 OutlineInputBorder textFieldBorder = OutlineInputBorder(
   borderSide: BorderSide(
-    color: primaryColor.withOpacity(0.1),
+    color: primaryColor.withOpacity(0.2),
   ),
 );
 

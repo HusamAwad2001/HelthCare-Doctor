@@ -27,7 +27,7 @@ class RegisterForm extends StatelessWidget {
               hintText: "حسام عوض دهليز",
               hintStyle: getLightStyle(
                 color: Colors.black54,
-                fontSize: 15,
+                fontSize: 13,
               ),
             ),
             validator: RequiredValidator(errorText: "اسم المستخدم مطلوب"),
@@ -48,7 +48,7 @@ class RegisterForm extends StatelessWidget {
               hintText: "test@email.com",
               hintStyle: getLightStyle(
                 color: Colors.black54,
-                fontSize: 15,
+                fontSize: 13,
               ),
             ),
             style: getLightStyle(
@@ -66,7 +66,7 @@ class RegisterForm extends StatelessWidget {
               hintText: "0595026281",
               hintStyle: getLightStyle(
                 color: Colors.black54,
-                fontSize: 15,
+                fontSize: 13,
               ),
             ),
             style: getLightStyle(
@@ -76,8 +76,44 @@ class RegisterForm extends StatelessWidget {
             onSaved: (phoneNumber) => _phoneNumber = phoneNumber!,
           ),
           const SizedBox(height: defaultPadding),
-          const TextFieldName(text: "كلمة المرور"),
 
+          const TextFieldName(text: "العنوان"),
+          TextFormField(
+            decoration: InputDecoration(
+              hintText: "رفح / شارع الإمام علي",
+              hintStyle: getLightStyle(
+                color: Colors.black54,
+                fontSize: 13,
+              ),
+            ),
+            validator: RequiredValidator(errorText: "اسم المستخدم مطلوب"),
+            style: getLightStyle(
+              color: Colors.black,
+            ),
+            // Let's save our username
+            onSaved: (username) => _userName = username!,
+          ),
+          const SizedBox(height: defaultPadding),
+
+          const TextFieldName(text: "تاريخ الميلاد"),
+          TextFormField(
+            decoration: InputDecoration(
+              hintText: "13/12/2001",
+              hintStyle: getLightStyle(
+                color: Colors.black54,
+                fontSize: 13,
+              ),
+            ),
+            validator: RequiredValidator(errorText: "اسم المستخدم مطلوب"),
+            style: getLightStyle(
+              color: Colors.black,
+            ),
+            // Let's save our username
+            onSaved: (username) => _userName = username!,
+          ),
+          const SizedBox(height: defaultPadding),
+
+          const TextFieldName(text: "كلمة المرور"),
           TextFormField(
             // We want to hide our password
             obscureText: true,
@@ -85,7 +121,7 @@ class RegisterForm extends StatelessWidget {
               hintText: "******",
               hintStyle: getLightStyle(
                 color: Colors.black54,
-                fontSize: 15,
+                fontSize: 13,
               ),
             ),
             style: getLightStyle(
@@ -105,7 +141,7 @@ class RegisterForm extends StatelessWidget {
               hintText: "*****",
               hintStyle: getLightStyle(
                 color: Colors.black54,
-                fontSize: 15,
+                fontSize: 13,
               ),
             ),
             style: getLightStyle(
@@ -136,7 +172,7 @@ class TextFieldName extends StatelessWidget {
       child: Text(
         text,
         style: getSemiBoldStyle(
-          color: Colors.black54,
+          color: Colors.black87,
           fontSize: 12,
         ),
       ),
