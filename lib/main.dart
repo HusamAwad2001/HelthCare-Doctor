@@ -1,16 +1,21 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:helth_care_doctor/core/storage.dart';
 import '../constants/constants.dart';
 import '../firebase_options.dart';
 import '../routes/pages.dart';
 import '../routes/routes.dart';
+import 'core/global.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await GetStorage.init();
+  Storage.getData();
   runApp(const MyApp());
 }
 
@@ -55,7 +60,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
       ),
       locale: const Locale('ar'),
-      initialRoute: Routes.welcomeScreen,
+      initialRoute: Global.isLogged ? Routes.navigationScreen : Routes.welcomeScreen,
       getPages: Pages.getPages(),
     );
   }

@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:get/get.dart';
 import 'package:helth_care_doctor/constants/app_styles.dart';
+import 'package:helth_care_doctor/controllers/auth_controller.dart';
 import 'package:helth_care_doctor/view/screens/auth/login_screen.dart';
 
 import '../../../constants/constants.dart';
 import 'components/register_form.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends GetView<AuthController> {
   // It's time to validat the text field
   final _formKey = GlobalKey<FormState>();
 
@@ -24,7 +26,7 @@ class RegisterScreen extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           // Now it takes 100% of our height
         ),
-        Container(color: Colors.black.withOpacity(0.2)),
+        // Container(color: Colors.white.withOpacity(0.2)),
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
@@ -37,71 +39,75 @@ class RegisterScreen extends StatelessWidget {
               statusBarIconBrightness: Brightness.dark,
             ),
           ),
-          body: Center(
-            child: SafeArea(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: defaultPadding),
-                    Text(
-                      "إنشاء حساب",
-                      style: getBoldStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                      ),
-                    ),
-                    Row(
+          body: GetBuilder<AuthController>(
+            builder: (_) {
+              return Center(
+                child: SafeArea(
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: defaultPadding),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        const SizedBox(height: defaultPadding),
                         Text(
-                          "هل لديك حساب بالفعل؟",
-                          style: getRegularStyle(
+                          "إنشاء حساب",
+                          style: getBoldStyle(
+                            fontSize: 20,
                             color: Colors.black,
-                            fontSize: 15,
                           ),
                         ),
-                        TextButton(
-                          onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LoginScreen(),
-                              )),
-                          child: Text(
-                            "تسجيل الدخول!",
-                            style: getBoldStyle(
-                              color: primaryColor,
-                              fontSize: 12,
+                        Row(
+                          children: [
+                            Text(
+                              "هل لديك حساب بالفعل؟",
+                              style: getRegularStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LoginScreen(),
+                                  )),
+                              child: Text(
+                                "تسجيل الدخول!",
+                                style: getBoldStyle(
+                                  color: primaryColor,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: defaultPadding),
+                        RegisterForm(formKey: _formKey),
+                        const SizedBox(height: defaultPadding),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () async{
+                              if (_formKey.currentState!.validate()) {
+                                await controller.register();
+                                _formKey.currentState!.save();
+                              }
+                            },
+                            child: Text(
+                              "سجل الآن",
+                              style: getBoldStyle(fontSize: 15),
                             ),
                           ),
                         ),
+                        const SizedBox(height: defaultPadding),
                       ],
                     ),
-                    const SizedBox(height: defaultPadding),
-                    RegisterForm(formKey: _formKey),
-                    const SizedBox(height: defaultPadding),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            // Sign up form is done
-                            // It saved our inputs
-                            _formKey.currentState!.save();
-                          }
-                        },
-                        child: Text(
-                          "سجل الآن",
-                          style: getBoldStyle(fontSize: 15),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: defaultPadding),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
         ),
       ],
