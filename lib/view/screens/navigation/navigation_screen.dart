@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:helth_care_doctor/constants/constants.dart';
 import 'package:helth_care_doctor/controllers/navigation_controller.dart';
 import 'package:helth_care_doctor/view/screens/navigation/chat_screen.dart';
 import 'package:helth_care_doctor/view/screens/navigation/home_screen.dart';
@@ -13,7 +14,21 @@ class NavigationScreen extends GetView<NavigationController> {
   Widget build(BuildContext context) {
     return GetBuilder<NavigationController>(
       builder: (_) {
+        List<String> titles = [
+          'نصائح صحية',
+          'المحادثات',
+          'لوحة التحكم',
+        ];
         return Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+              titles[controller.selectedIndex],
+              style: const TextStyle(
+                fontFamily: 'Expo',
+              ),
+            ),
+          ),
           body: IndexedStack(
             index: controller.selectedIndex,
             children: const [
@@ -22,6 +37,13 @@ class NavigationScreen extends GetView<NavigationController> {
               DashboardScreen(),
             ],
           ),
+          floatingActionButton: controller.selectedIndex == 0
+              ? FloatingActionButton(
+                  backgroundColor: primaryColor,
+                  onPressed: () {},
+                  child: const Icon(Icons.add),
+                )
+              : null,
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: controller.selectedIndex,
             onTap: (index) => controller.changeNavigation(index),
