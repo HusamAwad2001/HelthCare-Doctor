@@ -10,7 +10,7 @@ class Snack {
         messageText: Text(
           message,
           textAlign: TextAlign.center,
-          style: const TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white, fontFamily: 'Expo'),
         ),
         backgroundColor:
             type ? const Color(0xFF27ae60) : const Color(0xFFc0392b));

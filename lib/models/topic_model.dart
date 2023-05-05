@@ -1,12 +1,12 @@
 class TopicModel {
-  String id;
+  String? id;
   String title;
   String description;
   String logo;
   String image;
 
   TopicModel({
-    required this.id,
+    this.id,
     required this.title,
     required this.description,
     required this.logo,

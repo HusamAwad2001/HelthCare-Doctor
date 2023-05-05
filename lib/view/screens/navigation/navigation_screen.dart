@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:helth_care_doctor/constants/constants.dart';
 import 'package:helth_care_doctor/controllers/navigation_controller.dart';
+import 'package:helth_care_doctor/routes/routes.dart';
 import 'package:helth_care_doctor/view/screens/navigation/chat_screen.dart';
 import 'package:helth_care_doctor/view/screens/navigation/home_screen.dart';
 
@@ -13,6 +14,7 @@ class NavigationScreen extends GetView<NavigationController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<NavigationController>(
+      init: NavigationController(),
       builder: (_) {
         List<String> titles = [
           'نصائح صحية',
@@ -40,7 +42,7 @@ class NavigationScreen extends GetView<NavigationController> {
           floatingActionButton: controller.selectedIndex == 0
               ? FloatingActionButton(
                   backgroundColor: primaryColor,
-                  onPressed: () {},
+                  onPressed: () => Get.toNamed(Routes.addNewTopicScreen),
                   child: const Icon(Icons.add),
                 )
               : null,

@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:helth_care_doctor/controllers/navigation_controller.dart';
+import 'package:helth_care_doctor/view/widgets/snack.dart';
 
 import '../models/app_user.dart';
 import '../models/topic_model.dart';
+import '../routes/routes.dart';
 import '../view/widgets/loading_dialog.dart';
 
 class FirestoreHelper {
@@ -19,6 +22,7 @@ class FirestoreHelper {
     Get.back();
   }
 
+  /// Get_All_Topics
   Future<List<TopicModel>> getAllTopics() async {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
@@ -38,5 +42,21 @@ class FirestoreHelper {
       );
     }
     return [];
+  }
+
+  /// Add_New_Topic
+  Future<void> addNewTopic(TopicModel topic) async {
+    try {
+      await firebaseFirestore.collection('topics').add({
+        'id': '',
+        'title': topic.title,
+        'description': topic.description,
+        'logo': topic.logo,
+        'image': topic.image,
+      });
+      Get.offAllNamed(Routes.navigationScreen);
+    } catch (e) {
+      Snack().show(type: false, message: e.toString());
+    }
   }
 }
