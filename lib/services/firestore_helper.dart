@@ -59,4 +59,9 @@ class FirestoreHelper {
       Snack().show(type: false, message: e.toString());
     }
   }
+
+  /// Delete_One_Topic
+  Future<void> deleteTopic(TopicModel topic) async {
+    await firebaseFirestore.collection('topics').doc(topic.id).delete();
+  }
 }

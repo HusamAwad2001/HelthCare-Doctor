@@ -22,6 +22,7 @@ class NavigationScreen extends GetView<NavigationController> {
           'لوحة التحكم',
         ];
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(
             centerTitle: true,
             title: Text(
@@ -46,6 +47,7 @@ class NavigationScreen extends GetView<NavigationController> {
                   child: const Icon(Icons.add),
                 )
               : null,
+          floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: controller.selectedIndex,
             onTap: (index) => controller.changeNavigation(index),

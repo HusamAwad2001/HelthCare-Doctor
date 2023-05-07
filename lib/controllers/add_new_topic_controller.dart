@@ -13,6 +13,8 @@ import '../view/widgets/snack.dart';
 class AddNewTopicController extends GetxController {
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
+  final informationController = TextEditingController();
+  String typeOfAccount = "Text";
 
   XFile? _pickedFile;
   final ImagePicker _picker = ImagePicker();
