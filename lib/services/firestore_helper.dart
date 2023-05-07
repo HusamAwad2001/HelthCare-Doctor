@@ -51,8 +51,9 @@ class FirestoreHelper {
         'id': '',
         'title': topic.title,
         'description': topic.description,
-        'logo': topic.logo,
         'image': topic.image,
+        'information': topic.information,
+        'infoType': topic.infoType,
       });
       Get.offAllNamed(Routes.navigationScreen);
     } catch (e) {

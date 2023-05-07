@@ -2,15 +2,17 @@ class TopicModel {
   String? id;
   String title;
   String description;
-  String logo;
   String image;
+  String information;
+  String infoType;
 
   TopicModel({
     this.id,
     required this.title,
     required this.description,
-    required this.logo,
     required this.image,
+    required this.information,
+    required this.infoType,
   });
 
 
@@ -19,8 +21,9 @@ class TopicModel {
       id: json["id"],
       title: json["title"],
       description: json["description"],
-      logo: json["logo"],
       image: json["image"],
+      information: json["information"],
+      infoType: json["infoType"],
     );
   }
 
@@ -29,8 +32,9 @@ class TopicModel {
       "id": id,
       "title": title,
       "description": description,
-      "logo": logo,
       "image": image,
+      "information": information,
+      "infoType": infoType,
     };
   }
 }

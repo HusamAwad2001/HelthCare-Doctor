@@ -1,7 +1,8 @@
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:helth_care_doctor/controllers/add_new_topic_controller.dart';
-
+import 'package:video_player/video_player.dart';
 import '../../constants/app_styles.dart';
 import '../../constants/constants.dart';
 import '../widgets/button_widget.dart';
@@ -126,9 +127,9 @@ class AddNewTopicScreen extends GetView<AddNewTopicController> {
                       ),
                     ).paddingOnly(right: 20),
                     underline: const SizedBox(),
-                    value: controller.typeOfAccount,
+                    value: controller.typeOfInformation,
                     onChanged: (value) {
-                      controller.typeOfAccount = value!;
+                      controller.typeOfInformation = value!;
                       controller.update();
                     },
                     isExpanded: true,
@@ -170,62 +171,86 @@ class AddNewTopicScreen extends GetView<AddNewTopicController> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                controller.typeOfAccount == 'Text'
+                controller.typeOfInformation == 'Text'
                     ? TextFieldWidget(
                         controller: controller.informationController,
                         hintText: 'البيانات',
                       )
-                    : controller.typeOfAccount == 'Image'
-                        ? Container(
-                            width: double.infinity,
-                            height: 180,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                              boxShadow: [
-                                appBoxShadow(offsetY: 0, blurRadius: 2),
-                              ],
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Text(
-                                  'اختر صورة',
-                                  style: TextStyle(
-                                    fontFamily: 'Expo',
-                                    fontSize: 18,
-                                  ),
-                                ),
-                                SizedBox(width: 10),
-                                Icon(Icons.image, color: primaryColor),
-                              ],
+                    : controller.typeOfInformation == 'Image'
+                        ? GestureDetector(
+                            onTap: () => controller.pickInfoImage(),
+                            child: Container(
+                              width: double.infinity,
+                              height: 180,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                boxShadow: [
+                                  appBoxShadow(offsetY: 0, blurRadius: 2),
+                                ],
+                                image: controller.imageInfoFile != null
+                                    ? DecorationImage(
+                                        image: FileImage(
+                                            controller.imageInfoFile!),
+                                        fit: BoxFit.cover,
+                                      )
+                                    : null,
+                              ),
+                              child: controller.imageInfoFile == null
+                                  ? Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: const [
+                                        Text(
+                                          'اختر صورة',
+                                          style: TextStyle(
+                                            fontFamily: 'Expo',
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                        SizedBox(width: 10),
+                                        Icon(Icons.image, color: primaryColor),
+                                      ],
+                                    )
+                                  : null,
                             ),
                           )
-                        : Container(
-                            width: double.infinity,
-                            height: 180,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                              boxShadow: [
-                                appBoxShadow(offsetY: 0, blurRadius: 2),
-                              ],
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Text(
-                                  'اختر فيديو',
-                                  style: TextStyle(
-                                    fontFamily: 'Expo',
-                                    fontSize: 18,
-                                  ),
-                                ),
-                                SizedBox(width: 10),
-                                Icon(Icons.video_library, color: Colors.red),
-                              ],
+                        : GestureDetector(
+                            onTap: () => controller.pickInfoVideo(),
+                            child: Container(
+                              width: double.infinity,
+                              height: 180,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                boxShadow: [
+                                  appBoxShadow(offsetY: 0, blurRadius: 2),
+                                ],
+                              ),
+                              child: GetBuilder<AddNewTopicController>(
+                                builder: (_) {
+                                  return controller.videoInfoFile == null
+                                      ? Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: const [
+                                            Text(
+                                              'اختر فيديو',
+                                              style: TextStyle(
+                                                fontFamily: 'Expo',
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                            SizedBox(width: 10),
+                                            Icon(Icons.video_library,
+                                                color: Colors.red),
+                                          ],
+                                        )
+                                      : Text(controller.videoNameFile!);
+                                }
+                              ),
                             ),
                           ),
                 const SizedBox(height: 40),
