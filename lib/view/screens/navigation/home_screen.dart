@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:helth_care_doctor/constants/constants.dart';
 import 'package:helth_care_doctor/controllers/navigation_controller.dart';
 
+import '../../../routes/routes.dart';
 import '../../widgets/empty_list.dart';
 
 class HomeScreen extends GetView<NavigationController> {
@@ -82,7 +83,13 @@ class HomeScreen extends GetView<NavigationController> {
                                 final item = controller.topics[index];
                                 return GestureDetector(
                                   onTap: () {
-                                    print(item.image);
+                                    Get.toNamed(
+                                      Routes.topicDetailsScreen,
+                                      arguments: controller
+                                              .filteredTopics.isEmpty
+                                          ? item
+                                          : controller.filteredTopics[index],
+                                    );
                                   },
                                   child: Card(
                                     shape: RoundedRectangleBorder(
@@ -95,7 +102,8 @@ class HomeScreen extends GetView<NavigationController> {
                                     child: ListTile(
                                       leading: CircleAvatar(
                                         radius: 35,
-                                        backgroundImage: NetworkImage(item.image),
+                                        backgroundImage:
+                                            NetworkImage(item.image),
                                         backgroundColor: Colors.transparent,
                                       ),
                                       title: Text(
@@ -113,20 +121,14 @@ class HomeScreen extends GetView<NavigationController> {
                                                 .description,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
-                                        style:
-                                            const TextStyle(fontFamily: 'Expo'),
+                                        style: const TextStyle(
+                                          fontFamily: 'Expo',
+                                          fontSize: 12,
+                                        ),
                                       ),
                                       trailing: Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          GestureDetector(
-                                            onTap: () {},
-                                            child: const Icon(
-                                              Icons.notification_important,
-                                              color: Colors.amber,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 10),
                                           GestureDetector(
                                             onTap: () {
                                               AwesomeDialog(
@@ -163,6 +165,14 @@ class HomeScreen extends GetView<NavigationController> {
                                             child: const Icon(
                                               Icons.delete,
                                               color: Colors.red,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 10),
+                                          GestureDetector(
+                                            onTap: () {},
+                                            child: const Icon(
+                                              Icons.arrow_forward_ios,
+                                              color: Colors.grey,
                                             ),
                                           ),
                                         ],

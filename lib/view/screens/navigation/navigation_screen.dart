@@ -51,6 +51,8 @@ class NavigationScreen extends GetView<NavigationController> {
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: controller.selectedIndex,
             onTap: (index) => controller.changeNavigation(index),
+            selectedLabelStyle: const TextStyle(fontFamily: 'Expo'),
+            unselectedLabelStyle: const TextStyle(fontFamily: 'Expo'),
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.home_outlined),
