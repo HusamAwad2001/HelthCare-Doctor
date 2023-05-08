@@ -3,8 +3,8 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../constants/constants.dart';
-import '../../controllers/topic_details_controller.dart';
+import '../../../constants/constants.dart';
+import '../../../controllers/topic_details_controller.dart';
 
 class TopicDetailsScreen extends GetView<TopicDetailsController> {
   const TopicDetailsScreen({Key? key}) : super(key: key);
@@ -27,6 +27,31 @@ class TopicDetailsScreen extends GetView<TopicDetailsController> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              ListTile(
+                leading: CircleAvatar(
+                  radius: 35,
+                  backgroundImage: NetworkImage(controller.argument.image),
+                  backgroundColor: Colors.transparent,
+                ),
+                title: Text(
+                  controller.argument.title,
+                  style: const TextStyle(fontFamily: 'Expo'),
+                ),
+                subtitle: Text(
+                  controller.argument.description,
+                  // overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontFamily: 'Expo',
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+              controller.argument.infoType == 'Text'
+                  ? const Divider(thickness: 1, color: primaryColor)
+                  : const SizedBox(),
+              controller.argument.infoType == 'Image'
+                  ? const SizedBox(height: 20)
+                  : const SizedBox(),
               controller.argument.infoType == 'Text'
                   ? Text(
                       controller.argument.information,
@@ -77,28 +102,7 @@ class TopicDetailsScreen extends GetView<TopicDetailsController> {
                                 child: CircularProgressIndicator(),
                               ).marginOnly(top: 50),
                             ),
-              controller.argument.infoType == 'Text'
-                  ? const Divider(thickness: 1, color: primaryColor)
-                  : const SizedBox(),
-              ListTile(
-                leading: CircleAvatar(
-                  radius: 35,
-                  backgroundImage: NetworkImage(controller.argument.image),
-                  backgroundColor: Colors.transparent,
-                ),
-                title: Text(
-                  controller.argument.title,
-                  style: const TextStyle(fontFamily: 'Expo'),
-                ),
-                subtitle: Text(
-                  controller.argument.description,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontFamily: 'Expo',
-                    fontSize: 12,
-                  ),
-                ),
-              ),
+
             ],
           );
         },

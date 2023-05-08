@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:helth_care_doctor/constants/constants.dart';
 import 'package:helth_care_doctor/controllers/navigation_controller.dart';
 import 'package:helth_care_doctor/routes/routes.dart';
-import 'package:helth_care_doctor/view/screens/navigation/chat_screen.dart';
-import 'package:helth_care_doctor/view/screens/navigation/home_screen.dart';
+import 'package:helth_care_doctor/view/screens/admin/navigation/chat_screen.dart';
+import 'package:helth_care_doctor/view/screens/admin/navigation/home_screen.dart';
 
 import 'dashboard_screen.dart';
 

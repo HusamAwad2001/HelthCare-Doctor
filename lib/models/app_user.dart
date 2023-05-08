@@ -8,6 +8,7 @@ class AppUser {
   String address;
   String birthDate;
   String password;
+  String typeOfInAccount;
 
   AppUser({
     this.id,
@@ -19,6 +20,7 @@ class AppUser {
     required this.address,
     required this.birthDate,
     required this.password,
+    required this.typeOfInAccount,
   });
 
   factory AppUser.fromJson(Map<String, dynamic> json) {
@@ -32,6 +34,7 @@ class AppUser {
       address: json["address"],
       birthDate: json["birthDate"],
       password: json["password"],
+      typeOfInAccount: json["typeOfInAccount"],
     );
   }
 
@@ -46,6 +49,7 @@ class AppUser {
       "address": address,
       "birthDate": birthDate,
       "password": password,
+      "typeOfInAccount": typeOfInAccount,
     };
   }
 }

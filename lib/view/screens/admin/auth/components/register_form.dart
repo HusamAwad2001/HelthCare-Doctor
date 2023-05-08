@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:helth_care_doctor/constants/app_styles.dart';
 import 'package:helth_care_doctor/controllers/auth_controller.dart';
 
-import '../../../../constants/constants.dart';
+import '../../../../../constants/constants.dart';
 
 class RegisterForm extends GetView<AuthController> {
   RegisterForm({
@@ -13,8 +13,6 @@ class RegisterForm extends GetView<AuthController> {
   });
 
   final GlobalKey formKey;
-
-  late String _userName, _email, _password, _phoneNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +38,6 @@ class RegisterForm extends GetView<AuthController> {
                   color: Colors.black,
                 ),
                 // Let's save our username
-                onSaved: (username) => _userName = username!,
               ),
               const SizedBox(height: defaultPadding),
               //
@@ -59,7 +56,6 @@ class RegisterForm extends GetView<AuthController> {
                   color: Colors.black,
                 ),
                 // Let's save our username
-                onSaved: (username) => _userName = username!,
               ),
               const SizedBox(height: defaultPadding),
               //
@@ -78,7 +74,6 @@ class RegisterForm extends GetView<AuthController> {
                   color: Colors.black,
                 ),
                 // Let's save our username
-                onSaved: (username) => _userName = username!,
               ),
               const SizedBox(height: defaultPadding),
               //
@@ -98,7 +93,6 @@ class RegisterForm extends GetView<AuthController> {
                 ),
                 validator:
                     EmailValidator(errorText: "تأكد من البريد الإلكتروني!"),
-                onSaved: (email) => _email = email!,
               ),
               const SizedBox(height: defaultPadding),
               //
@@ -117,7 +111,6 @@ class RegisterForm extends GetView<AuthController> {
                   color: Colors.black,
                 ),
                 validator: RequiredValidator(errorText: "رقم الهاتف مطلوب"),
-                onSaved: (phoneNumber) => _phoneNumber = phoneNumber!,
               ),
               const SizedBox(height: defaultPadding),
               //
@@ -136,7 +129,6 @@ class RegisterForm extends GetView<AuthController> {
                   color: Colors.black,
                 ),
                 // Let's save our username
-                onSaved: (username) => _userName = username!,
               ),
               const SizedBox(height: defaultPadding),
               //
@@ -155,7 +147,6 @@ class RegisterForm extends GetView<AuthController> {
                   color: Colors.black,
                 ),
                 // Let's save our username
-                onSaved: (username) => _userName = username!,
               ),
               const SizedBox(height: defaultPadding),
               //
@@ -173,11 +164,6 @@ class RegisterForm extends GetView<AuthController> {
                 style: getLightStyle(
                   color: Colors.black,
                 ),
-                // validator: passwordValidator,
-                onSaved: (password) => _password = password!,
-                // We also need to validate our password
-                // Now if we type anything it adds that to our password
-                onChanged: (pass) => _password = pass,
               ),
               // const SizedBox(height: defaultPadding),
               //
@@ -199,6 +185,63 @@ class RegisterForm extends GetView<AuthController> {
               //       MatchValidator(errorText: "كلمة السر غير مطابقة")
               //           .validateMatch(pass!, _password),
               // ),
+
+              const SizedBox(height: defaultPadding),
+              const TextFieldName(text: "نوع الحساب"),
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                  boxShadow: [
+                    appBoxShadow(offsetY: 0, blurRadius: 2),
+                  ],
+                ),
+                alignment: Alignment.centerRight,
+                child: DropdownButton<String>(
+                  icon: const Icon(Icons.arrow_drop_down_circle_outlined)
+                      .paddingOnly(left: 20),
+                  // icon: const SizedBox(),
+                  hint: const Text(
+                    'اختر نوع الحساب',
+                    style: TextStyle(
+                      fontFamily: 'Expo',
+                      fontSize: 18,
+                    ),
+                  ).paddingOnly(right: 20),
+                  underline: const SizedBox(),
+                  value: controller.typeOfInAccount,
+                  onChanged: (value) {
+                    controller.typeOfInAccount = value!;
+                    controller.update();
+                  },
+                  isExpanded: true,
+                  items: [
+                    DropdownMenuItem(
+                      value: 'client',
+                      child: Text(
+                        'مريض',
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(0.8),
+                          fontFamily: 'Expo',
+                          fontSize: 18,
+                        ),
+                      ).paddingOnly(right: 20, left: 20),
+                    ),
+                    DropdownMenuItem(
+                      value: 'doctor',
+                      child: Text(
+                        'دكتور',
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(0.8),
+                          fontFamily: 'Expo',
+                          fontSize: 18,
+                        ),
+                      ).paddingOnly(right: 20, left: 20),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         );

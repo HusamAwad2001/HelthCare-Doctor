@@ -9,7 +9,7 @@ import '../routes/pages.dart';
 import '../routes/routes.dart';
 import 'core/global.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -60,7 +60,11 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
       ),
       locale: const Locale('ar'),
-      initialRoute: Global.isLogged ? Routes.navigationScreen : Routes.welcomeScreen,
+      initialRoute: !Global.isLogged
+          ? Routes.welcomeScreen
+          : Global.user['typeOfInAccount'] == 'doctor'
+              ? Routes.navigationScreen
+              : Routes.patentsNavigationScreen,
       getPages: Pages.getPages(),
     );
   }

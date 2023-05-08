@@ -23,6 +23,8 @@ class AuthController extends GetxController {
   final loginEmailController = TextEditingController();
   final loginPasswordController = TextEditingController();
 
+  String typeOfInAccount = "client";
+
   void login() async {
     FocusManager.instance.primaryFocus?.unfocus();
     await FbAuthController().signIn(
@@ -47,6 +49,7 @@ class AuthController extends GetxController {
         address: addressController.text.trim(),
         birthDate: birthDateController.text.trim(),
         password: passwordController.text.trim(),
+        typeOfInAccount: typeOfInAccount,
       ),
     );
     await FbAuthController().createAccount(
@@ -65,12 +68,23 @@ class AuthController extends GetxController {
         'address': addressController.text.trim(),
         'birthDate': birthDateController.text.trim(),
         'password': passwordController.text.trim(),
+        'typeOfInAccount': typeOfInAccount,
       };
       Storage.instance.write("isLogged", Global.isLogged);
       Storage.instance.write("user", Global.user);
-      Get.offAllNamed(Routes.homeScreen);
+      Global.user['typeOfInAccount'] == 'doctor'
+          ? Get.offAllNamed(Routes.navigationScreen)
+          : Get.offAllNamed(Routes.patentsNavigationScreen);
     });
     update();
+  }
+
+  Future<void> logout() async{
+    LoadingDialog().dialog();
+    await FbAuthController().signOut();
+    await Storage.instance.remove('user');
+    await Storage.instance.remove('isLogged');
+    Get.offAllNamed(Routes.loginScreen);
   }
 
   void clear() {

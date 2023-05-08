@@ -14,9 +14,12 @@ class FirestoreHelper {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   Future<void> addUserToFirestore(AppUser appUser) async {
+    final collectionName = appUser.typeOfInAccount == 'doctor'
+        ? 'doctors'
+        : 'clients';
     LoadingDialog().dialog();
     await firebaseFirestore
-        .collection('doctors')
+        .collection(collectionName)
         .doc(appUser.id)
         .set(appUser.toJson());
     Get.back();
@@ -26,7 +29,7 @@ class FirestoreHelper {
   Future<List<TopicModel>> getAllTopics() async {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
-      await firebaseFirestore.collection('topics').get();
+          await firebaseFirestore.collection('topics').get();
       List<QueryDocumentSnapshot<Map<String, dynamic>>> documents =
           querySnapshot.docs;
       List<TopicModel>? topics = documents.map((e) {

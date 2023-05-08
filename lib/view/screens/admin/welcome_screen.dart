@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 
-import '../../constants/app_styles.dart';
-import '../../constants/constants.dart';
+import '../../../constants/app_styles.dart';
+import '../../../constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../routes/routes.dart';
+import '../../../routes/routes.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);

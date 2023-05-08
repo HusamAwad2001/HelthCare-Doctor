@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:helth_care_doctor/controllers/auth_controller.dart';
-import '../../../../constants/app_styles.dart';
-import '../../../../constants/constants.dart';
+import '../../../../../constants/app_styles.dart';
+import '../../../../../constants/constants.dart';
 import 'register_form.dart';
 
 class LoginForm extends GetView<AuthController> {
