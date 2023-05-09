@@ -64,6 +64,19 @@ class FirestoreHelper {
     }
   }
 
+  Future<bool> updateHiddenTopic(String topicId, bool isHidden) async {
+    try {
+      await firebaseFirestore
+          .collection('topics')
+          .doc(topicId)
+          .update({'hidden': isHidden});
+      return true;
+    } catch (e) {
+      Snack().show(type: false, message: e.toString());
+      return false;
+    }
+  }
+
   /// Delete_One_Topic
   Future<void> deleteTopic(TopicModel topic) async {
     await firebaseFirestore.collection('topics').doc(topic.id).delete();
@@ -85,25 +98,25 @@ class FirestoreHelper {
   /// Get_All_Clients
   Future<List<ChatUser>> getAllClients() async {
     QuerySnapshot<Map<String, dynamic>> results =
-    await firebaseFirestore.collection('clients').get();
+        await firebaseFirestore.collection('clients').get();
     List<ChatUser> users = results.docs.map((e) {
       return ChatUser.fromMap(e.data());
     }).toList();
     users.removeWhere(
-          (element) => element.id == FbAuthController().getCurrentUser(),
+      (element) => element.id == FbAuthController().getCurrentUser(),
     );
     return users;
   }
-
 
   String getChatId(String otherId) {
     String myId = FbAuthController().getCurrentUser();
     int myHashCode = myId.hashCode;
     int otherHashCode = otherId.hashCode;
     String collectionId =
-    myHashCode > otherHashCode ? '$myId$otherId' : '$otherId$myId';
+        myHashCode > otherHashCode ? '$myId$otherId' : '$otherId$myId';
     return collectionId;
   }
+
   sendMessage(ChatMessage message, String otherUserId) async {
     String collectionId = getChatId(otherUserId);
     firebaseFirestore
@@ -112,6 +125,7 @@ class FirestoreHelper {
         .collection('messages')
         .add(message.toMap());
   }
+
   Stream<List<ChatMessage>> getAllChatMessage(String otherUserId) {
     String collectionId = getChatId(otherUserId);
     Stream<QuerySnapshot<Map<String, dynamic>>> stream = firebaseFirestore

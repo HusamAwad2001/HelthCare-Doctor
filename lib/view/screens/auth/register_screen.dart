@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:helth_care_doctor/constants/app_styles.dart';
 import 'package:helth_care_doctor/controllers/auth_controller.dart';
-import 'package:helth_care_doctor/view/screens/admin/auth/login_screen.dart';
+import 'package:helth_care_doctor/view/screens/auth/login_screen.dart';
 
 import '../../../../constants/constants.dart';
 import 'components/register_form.dart';

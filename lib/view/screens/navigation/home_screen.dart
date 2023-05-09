@@ -6,7 +6,7 @@ import 'package:helth_care_doctor/constants/constants.dart';
 import 'package:helth_care_doctor/controllers/navigation_controller.dart';
 
 import '../../../../routes/routes.dart';
-import '../../../widgets/empty_list.dart';
+import '../../widgets/empty_list.dart';
 
 class HomeScreen extends GetView<NavigationController> {
   const HomeScreen({Key? key}) : super(key: key);

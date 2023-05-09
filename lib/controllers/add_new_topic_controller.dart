@@ -65,6 +65,7 @@ class AddNewTopicController extends GetxController {
   }
 
   String? information;
+  bool hidden = false;
   Future<void> addNewTopic() async {
     LoadingDialog().dialog();
     String? imageUrl;
@@ -90,6 +91,7 @@ class AddNewTopicController extends GetxController {
       image: imageUrl!,
       information: information!,
       infoType: typeOfInformation,
+      hidden: hidden,
     );
     await FirestoreHelper.fireStoreHelper.addNewTopic(newTopic);
     update();

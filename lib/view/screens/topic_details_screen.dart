@@ -2,9 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:helth_care_doctor/constants/app_styles.dart';
 
-import '../../../constants/constants.dart';
-import '../../../controllers/topic_details_controller.dart';
+import '../../constants/constants.dart';
+import '../../controllers/topic_details_controller.dart';
 
 class TopicDetailsScreen extends GetView<TopicDetailsController> {
   const TopicDetailsScreen({Key? key}) : super(key: key);
@@ -27,6 +28,19 @@ class TopicDetailsScreen extends GetView<TopicDetailsController> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Card(
+                elevation: 5,
+                child: SwitchListTile(
+                  value: controller.isHidden,
+                  onChanged: (value) {
+                    controller.updateHiddenTopic(value);
+                  },
+                  title: Text(
+                    controller.isHidden ? 'المقالة مخفية' : 'المقالة ظاهرة',
+                    style: getRegularStyle(color: Colors.black),
+                  ),
+                ),
+              ).paddingAll(10),
               ListTile(
                 leading: CircleAvatar(
                   radius: 35,
@@ -102,7 +116,6 @@ class TopicDetailsScreen extends GetView<TopicDetailsController> {
                                 child: CircularProgressIndicator(),
                               ).marginOnly(top: 50),
                             ),
-
             ],
           );
         },

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:helth_care_doctor/controllers/auth_controller.dart';
-import 'package:helth_care_doctor/view/screens/admin/auth/register_screen.dart';
+import 'package:helth_care_doctor/view/screens/auth/register_screen.dart';
 import '../../../../constants/app_styles.dart';
 import '../../../../constants/constants.dart';
 import 'components/login_form.dart';

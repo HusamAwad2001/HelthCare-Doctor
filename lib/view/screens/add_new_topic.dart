@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:helth_care_doctor/controllers/add_new_topic_controller.dart';
 import 'package:video_player/video_player.dart';
-import '../../../constants/app_styles.dart';
-import '../../../constants/constants.dart';
-import '../../widgets/button_widget.dart';
-import '../../widgets/text_field_widget.dart';
+import '../../constants/app_styles.dart';
+import '../../constants/constants.dart';
+import '../widgets/button_widget.dart';
+import '../widgets/text_field_widget.dart';
 
 class AddNewTopicScreen extends GetView<AddNewTopicController> {
   const AddNewTopicScreen({Key? key}) : super(key: key);
