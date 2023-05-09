@@ -13,8 +13,10 @@ import '../bindings/add_new_topic_binding.dart';
 import '../bindings/auth_binding.dart';
 import '../bindings/topic_details_binding.dart';
 import '../bindings/chat_binding.dart';
+import '../bindings/update_topic_binding.dart';
 import '../view/screens/add_new_topic.dart';
 import '../view/screens/topic_details_screen.dart';
+import '../view/screens/update_topic_screen.dart';
 
 class Pages {
   static List<GetPage> getPages() {
@@ -56,6 +58,13 @@ class Pages {
         name: Routes.addNewTopicScreen,
         page: () => const AddNewTopicScreen(),
         binding: AddNewTopicBinding(),
+        transition: Transition.fadeIn,
+        curve: Curves.easeIn,
+      ),
+      GetPage(
+        name: Routes.updateTopicScreen,
+        page: () => const UpdateTopicScreen(),
+        binding: UpdateTopicBinding(),
         transition: Transition.fadeIn,
         curve: Curves.easeIn,
       ),

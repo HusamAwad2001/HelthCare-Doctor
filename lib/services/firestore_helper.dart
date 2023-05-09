@@ -16,6 +16,8 @@ class FirestoreHelper {
   static FirestoreHelper fireStoreHelper = FirestoreHelper();
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
+  /// ------------------------------------------------------------------------
+
   Future<void> addUserToFirestore(AppUser appUser) async {
     LoadingDialog().dialog();
     await firebaseFirestore
@@ -24,6 +26,8 @@ class FirestoreHelper {
         .set(appUser.toJson());
     Get.back();
   }
+
+  /// ------------------------------------------------------------------------
 
   /// Get_All_Topics
   Future<List<TopicModel>> getAllTopics() async {
@@ -64,6 +68,7 @@ class FirestoreHelper {
     }
   }
 
+  /// Update_Hidden_Topic
   Future<bool> updateHiddenTopic(String topicId, bool isHidden) async {
     try {
       await firebaseFirestore
@@ -77,10 +82,20 @@ class FirestoreHelper {
     }
   }
 
+  /// Update_One_Topic
+  Future<void> updateTopic(TopicModel topic) async {
+    await firebaseFirestore
+        .collection('topics')
+        .doc(topic.id)
+        .update(topic.toJson());
+  }
+
   /// Delete_One_Topic
   Future<void> deleteTopic(TopicModel topic) async {
     await firebaseFirestore.collection('topics').doc(topic.id).delete();
   }
+
+  /// ------------------------------------------------------------------------
 
   /// Get_All_Doctors
   Future<List<ChatUser>> getAllDoctors() async {
@@ -95,6 +110,8 @@ class FirestoreHelper {
     return users;
   }
 
+  /// ------------------------------------------------------------------------
+
   /// Get_All_Clients
   Future<List<ChatUser>> getAllClients() async {
     QuerySnapshot<Map<String, dynamic>> results =
@@ -107,6 +124,8 @@ class FirestoreHelper {
     );
     return users;
   }
+
+  /// ------------------------------------------------------------------------
 
   String getChatId(String otherId) {
     String myId = FbAuthController().getCurrentUser();
@@ -141,4 +160,6 @@ class FirestoreHelper {
       return messages;
     });
   }
+
+  /// ------------------------------------------------------------------------
 }

@@ -5,6 +5,7 @@ class Routes {
   static const String navigationScreen = '/NavigationScreen';
   static const String homeScreen = '/HomeScreen';
   static const String addNewTopicScreen = '/AddNewTopicScreen';
+  static const String updateTopicScreen = '/UpdateTopicScreen';
   static const String topicDetailsScreen = '/TopicDetailsScreen';
   static const String chatScreen = '/ChatScreen';
 }

@@ -4,6 +4,7 @@ import 'package:chewie/chewie.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:helth_care_doctor/routes/routes.dart';
 import 'package:helth_care_doctor/view/widgets/loading_dialog.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
@@ -13,7 +14,8 @@ import '../services/firestore_helper.dart';
 import '../services/storage_helper.dart';
 import '../view/widgets/snack.dart';
 
-class AddNewTopicController extends GetxController {
+class UpdateTopicController extends GetxController {
+  TopicModel argument = Get.arguments;
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   final informationController = TextEditingController();
@@ -68,26 +70,36 @@ class AddNewTopicController extends GetxController {
 
   String? information;
   bool hidden = false;
+
   Future<void> addNewTopic() async {
     LoadingDialog().dialog();
     String? imageUrl;
     if (imageFile != null) {
       imageUrl = await StorageHelper.instance.uploadImage(imageFile!);
+    }else{
+      imageUrl = argument.image;
     }
     if (typeOfInformation == "Text") {
       if (informationController.text.isNotEmpty) {
         information = informationController.text;
+      }else{
+        information = argument.information;
       }
     } else if (typeOfInformation == "Image") {
       if (imageInfoFile != null) {
         information = await StorageHelper.instance.uploadImage(imageInfoFile!);
+      }else{
+        imageUrl = imageLink;
       }
     } else {
       if (videoInfoFile != null) {
         information = await StorageHelper.instance.uploadImage(videoInfoFile!);
+      }else{
+        imageUrl = videoLink;
       }
     }
     TopicModel newTopic = TopicModel(
+      id: argument.id,
       title: titleController.text,
       description: descriptionController.text,
       image: imageUrl!,
@@ -95,24 +107,26 @@ class AddNewTopicController extends GetxController {
       infoType: typeOfInformation,
       hidden: hidden,
     );
-    await FirestoreHelper.fireStoreHelper.addNewTopic(newTopic);
+    await FirestoreHelper.fireStoreHelper.updateTopic(newTopic);
+    // Get.offAll(Routes.navigationScreen);
+    Get.back();
     update();
   }
 
-  validate() async{
+  validate() async {
     FocusManager.instance.primaryFocus?.unfocus();
-    if (imageFile != null) {
-      if (titleController.text.isNotEmpty) {
-        if (descriptionController.text.isNotEmpty) {
+    if (imageFile != null || argument.image != null) {
+      if (titleController.text.isNotEmpty || argument.title != null) {
+        if (descriptionController.text.isNotEmpty || argument.description != null) {
           if (typeOfInformation == "Text") {
-            if (informationController.text.isNotEmpty) {
+            if (informationController.text.isNotEmpty || argument.information != null) {
               // information = informationController.text;
               addNewTopic();
             } else {
               Snack().show(type: false, message: 'يجب إضافة البيانات');
             }
           } else if (typeOfInformation == "Image") {
-            if (imageInfoFile != null) {
+            if (imageInfoFile != null || argument.information != null) {
               // information = await StorageHelper.instance.uploadImage(imageInfoFile!);
               addNewTopic();
             } else {
@@ -134,6 +148,39 @@ class AddNewTopicController extends GetxController {
       }
     } else {
       Snack().show(type: false, message: 'يجب إختيار صورة');
+    }
+  }
+
+  @override
+  void onInit() {
+    titleController.text = argument.title;
+    descriptionController.text = argument.description;
+    typeOfInformation = argument.infoType;
+    checkInformationType();
+    super.onInit();
+  }
+
+  VideoPlayerController? controller;
+
+  ChewieController? chewieController;
+
+  checkInformationType() {
+    if (argument.infoType == 'Text') {
+      informationController.text = argument.information;
+    }
+    if (argument.infoType == 'Image') {
+      imageLink = argument.information;
+    }
+    if (argument.infoType == 'Video') {
+      videoLink = argument.information;
+      controller = VideoPlayerController.network(
+        argument.infoType == "Video" ? argument.information : '',
+      )..initialize().then((value) {
+          chewieController = ChewieController(
+            videoPlayerController: controller!,
+          );
+          update();
+        });
     }
   }
 }

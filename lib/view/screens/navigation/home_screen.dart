@@ -169,9 +169,18 @@ class HomeScreen extends GetView<NavigationController> {
                                           ),
                                           const SizedBox(width: 10),
                                           GestureDetector(
-                                            onTap: () {},
+                                            onTap: () {
+                                              Get.toNamed(
+                                                Routes.updateTopicScreen,
+                                                arguments: controller
+                                                        .filteredTopics.isEmpty
+                                                    ? item
+                                                    : controller
+                                                        .filteredTopics[index],
+                                              );
+                                            },
                                             child: const Icon(
-                                              Icons.arrow_forward_ios,
+                                              Icons.edit,
                                               color: Colors.grey,
                                             ),
                                           ),
