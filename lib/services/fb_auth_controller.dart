@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../models/chat_user.dart';
 import '../view/widgets/loading_dialog.dart';
 
 class FbAuthController {
@@ -32,7 +34,7 @@ class FbAuthController {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       Get.back();
-      return await _handleEmailValidation(userCredential);
+      return true;
     } on FirebaseAuthException catch (e) {
       Get.back();
       Get.snackbar(
@@ -165,5 +167,10 @@ class FbAuthController {
         backgroundColor: Colors.red,
       );
     }
+  }
+
+  /// Get_Current_User
+  String getCurrentUser() {
+    return _auth.currentUser!.uid;
   }
 }

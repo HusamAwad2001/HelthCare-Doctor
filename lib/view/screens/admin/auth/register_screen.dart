@@ -15,6 +15,7 @@ class RegisterScreen extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(AuthController());
     return Stack(
       fit: StackFit.expand,
       children: [

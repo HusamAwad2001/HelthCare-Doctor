@@ -185,63 +185,6 @@ class RegisterForm extends GetView<AuthController> {
               //       MatchValidator(errorText: "كلمة السر غير مطابقة")
               //           .validateMatch(pass!, _password),
               // ),
-
-              const SizedBox(height: defaultPadding),
-              const TextFieldName(text: "نوع الحساب"),
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
-                  boxShadow: [
-                    appBoxShadow(offsetY: 0, blurRadius: 2),
-                  ],
-                ),
-                alignment: Alignment.centerRight,
-                child: DropdownButton<String>(
-                  icon: const Icon(Icons.arrow_drop_down_circle_outlined)
-                      .paddingOnly(left: 20),
-                  // icon: const SizedBox(),
-                  hint: const Text(
-                    'اختر نوع الحساب',
-                    style: TextStyle(
-                      fontFamily: 'Expo',
-                      fontSize: 18,
-                    ),
-                  ).paddingOnly(right: 20),
-                  underline: const SizedBox(),
-                  value: controller.typeOfInAccount,
-                  onChanged: (value) {
-                    controller.typeOfInAccount = value!;
-                    controller.update();
-                  },
-                  isExpanded: true,
-                  items: [
-                    DropdownMenuItem(
-                      value: 'client',
-                      child: Text(
-                        'مريض',
-                        style: TextStyle(
-                          color: Colors.black.withOpacity(0.8),
-                          fontFamily: 'Expo',
-                          fontSize: 18,
-                        ),
-                      ).paddingOnly(right: 20, left: 20),
-                    ),
-                    DropdownMenuItem(
-                      value: 'doctor',
-                      child: Text(
-                        'دكتور',
-                        style: TextStyle(
-                          color: Colors.black.withOpacity(0.8),
-                          fontFamily: 'Expo',
-                          fontSize: 18,
-                        ),
-                      ).paddingOnly(right: 20, left: 20),
-                    ),
-                  ],
-                ),
-              ),
             ],
           ),
         );

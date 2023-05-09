@@ -13,7 +13,7 @@ class LoginScreen extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    // But still same problem, let's fixed it
+    Get.put(AuthController());
     return Stack(
       fit: StackFit.expand,
       children: [

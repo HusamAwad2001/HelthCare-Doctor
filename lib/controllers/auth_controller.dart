@@ -23,7 +23,7 @@ class AuthController extends GetxController {
   final loginEmailController = TextEditingController();
   final loginPasswordController = TextEditingController();
 
-  String typeOfInAccount = "client";
+  String typeOfInAccount = "doctor";
 
   void login() async {
     FocusManager.instance.primaryFocus?.unfocus();
@@ -32,32 +32,7 @@ class AuthController extends GetxController {
       password: loginPasswordController.text.trim(),
     ).then((value) {
       clear();
-      Snack().show(type: true, message: 'تم تسجيل الدخول بنجاح');
-    });
-    update();
-  }
-
-  Future<void> register() async {
-    FocusManager.instance.primaryFocus?.unfocus();
-    await FirestoreHelper.fireStoreHelper.addUserToFirestore(
-      AppUser(
-        firstName: firstNameController.text.trim(),
-        secondName: secondNameController.text.trim(),
-        familyName: familyNameController.text.trim(),
-        email: emailController.text.trim(),
-        phone: phoneController.text.trim(),
-        address: addressController.text.trim(),
-        birthDate: birthDateController.text.trim(),
-        password: passwordController.text.trim(),
-        typeOfInAccount: typeOfInAccount,
-      ),
-    );
-    await FbAuthController().createAccount(
-      email: emailController.text.trim(),
-      password: passwordController.text.trim(),
-    ).then((value) {
-      clear();
-      Snack().show(type: true, message: 'تم إنشاء الحساب بنجاح');
+      // Snack().show(type: true, message: 'تم تسجيل الدخول بنجاح');
       Global.isLogged = true;
       Global.user = {
         'firstName': firstNameController.text.trim(),
@@ -72,9 +47,54 @@ class AuthController extends GetxController {
       };
       Storage.instance.write("isLogged", Global.isLogged);
       Storage.instance.write("user", Global.user);
-      Global.user['typeOfInAccount'] == 'doctor'
-          ? Get.offAllNamed(Routes.navigationScreen)
-          : Get.offAllNamed(Routes.patentsNavigationScreen);
+      // Global.user['typeOfInAccount'] == 'doctor'
+      //     ? Get.offAllNamed(Routes.navigationScreen)
+      //     : Get.offAllNamed(Routes.patentsNavigationScreen);
+      Get.offAllNamed(Routes.navigationScreen);
+
+
+    });
+    update();
+  }
+
+  Future<void> register() async {
+    FocusManager.instance.primaryFocus?.unfocus();
+    await FbAuthController().createAccount(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+    ).then((value) async{
+      await FirestoreHelper.fireStoreHelper.addUserToFirestore(
+        AppUser(
+          id: FbAuthController().getCurrentUser(),
+          firstName: firstNameController.text.trim(),
+          secondName: secondNameController.text.trim(),
+          familyName: familyNameController.text.trim(),
+          email: emailController.text.trim(),
+          phone: phoneController.text.trim(),
+          address: addressController.text.trim(),
+          birthDate: birthDateController.text.trim(),
+          password: passwordController.text.trim(),
+          typeOfInAccount: typeOfInAccount,
+        ),
+      );
+      clear();
+      Snack().show(type: true, message: 'تم إنشاء الحساب بنجاح');
+      Global.isLogged = true;
+      Global.user = {
+        'id': FbAuthController().getCurrentUser(),
+        'firstName': firstNameController.text.trim(),
+        'secondName': secondNameController.text.trim(),
+        'familyName': familyNameController.text.trim(),
+        'email': emailController.text.trim(),
+        'phone': phoneController.text.trim(),
+        'address': addressController.text.trim(),
+        'birthDate': birthDateController.text.trim(),
+        'password': passwordController.text.trim(),
+        'typeOfInAccount': typeOfInAccount,
+      };
+      Storage.instance.write("isLogged", Global.isLogged);
+      Storage.instance.write("user", Global.user);
+      Get.offAllNamed(Routes.navigationScreen);
     });
     update();
   }

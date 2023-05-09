@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:helth_care_doctor/controllers/navigation_controller.dart';
 import 'package:helth_care_doctor/core/storage.dart';
 import '../constants/constants.dart';
 import '../firebase_options.dart';
@@ -62,9 +63,7 @@ class MyApp extends StatelessWidget {
       locale: const Locale('ar'),
       initialRoute: !Global.isLogged
           ? Routes.welcomeScreen
-          : Global.user['typeOfInAccount'] == 'doctor'
-              ? Routes.navigationScreen
-              : Routes.patentsNavigationScreen,
+          : Routes.navigationScreen,
       getPages: Pages.getPages(),
     );
   }
