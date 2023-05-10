@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:helth_care_doctor/controllers/navigation_controller.dart';
 import 'package:helth_care_doctor/core/storage.dart';
+import 'package:helth_care_doctor/services/fbNotifications.dart';
 import '../constants/constants.dart';
 import '../firebase_options.dart';
 import '../routes/pages.dart';
@@ -16,6 +17,11 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await GetStorage.init();
+  await FbNotifications.init();
+  // await FbNotifications.showNotification(title: 'title', body: 'body');
+  await FbNotifications().getDeviceToken().then((value) async{
+    Storage.instance.write('deviceToken', value.toString());
+  });
   Storage.getData();
   runApp(const MyApp());
 }

@@ -61,6 +61,8 @@ class FirestoreHelper {
         'image': topic.image,
         'information': topic.information,
         'infoType': topic.infoType,
+        'hidden': false,
+        'isSubscribe': false,
       });
       Get.offAllNamed(Routes.navigationScreen);
     } catch (e) {
