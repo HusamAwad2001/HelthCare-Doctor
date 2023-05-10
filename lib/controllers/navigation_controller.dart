@@ -19,6 +19,8 @@ import 'package:http/http.dart' as http;
 
 class NavigationController extends GetxController {
   final searchController = TextEditingController();
+  final titleController = TextEditingController();
+  final bodyController = TextEditingController();
   FbNotifications notifications = FbNotifications();
 
   @override
@@ -133,6 +135,7 @@ class NavigationController extends GetxController {
     },
   };
   Future<void> sendNotification({required String to, title, body}) async {
+    LoadingDialog().dialog();
     await http.post(
       Uri.parse('https://fcm.googleapis.com/fcm/send'),
       body: jsonEncode({
@@ -148,5 +151,6 @@ class NavigationController extends GetxController {
         'Authorization': 'key=AAAA31_h-pY:APA91bEjqtwfUcWFx_jli2yJT94nhlNk1lyT6cxUPc66YbHZW5U4hcjoXe9SJP-thI4ucholBqVkH3SCFa51BhF111tPNH9bD64Rt0I0hp44D2_pbyeIDYrpd4NKy2Ncxi7IOFgvbwT5',
       },
     );
+    Get.back();
   }
 }

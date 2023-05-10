@@ -8,6 +8,7 @@ import 'package:helth_care_doctor/constants/constants.dart';
 import 'package:helth_care_doctor/controllers/navigation_controller.dart';
 import 'package:helth_care_doctor/services/firestore_helper.dart';
 import 'package:helth_care_doctor/view/widgets/button_widget.dart';
+import 'package:helth_care_doctor/view/widgets/snack.dart';
 import 'package:helth_care_doctor/view/widgets/text_field_widget.dart';
 
 import '../../../../routes/routes.dart';
@@ -172,30 +173,56 @@ class DashboardScreen extends GetView<NavigationController> {
                                                         // mainAxisSize: MainAxisSize.min,
                                                         children: [
                                                           Text(
-                                                            'إرسال الإشعارات لكل المشتركين',
+                                                            'إرسال الإشعارات لكل المشتركين في "${controller.filteredTopics.isEmpty
+                                                                ? item.title
+                                                                : controller.filteredTopics[index]
+                                                                .title}"',
+                                                            textAlign: TextAlign.center,
                                                             style:
-                                                                getRegularStyle(),
+                                                                getRegularStyle().copyWith(height: 1.5),
                                                           ),
                                                           const SizedBox(
                                                               height: 20),
                                                           TextFieldWidget(
-                                                            controller:
-                                                                TextEditingController(),
+                                                            controller: controller.titleController,
                                                             hintText:
                                                                 'عنوان الإشعار',
                                                           ),
                                                           const SizedBox(
                                                               height: 10),
                                                           TextFieldWidget(
-                                                            controller:
-                                                                TextEditingController(),
+                                                            controller: controller.bodyController,
                                                             hintText: 'وصف الإشعار',
                                                           ),
                                                           const SizedBox(
                                                               height: 20),
                                                           ButtonWidget(
                                                             label: 'إرسال',
-                                                            onPressed: () {},
+                                                            onPressed: () async{
+                                                              if(controller.titleController.text.isEmpty){
+                                                                Snack().show(type: false, message: 'قم بكتابة عنوان الإشعار');
+                                                              } else if(controller.bodyController.text.isEmpty){
+                                                                Snack().show(type: false, message: 'قم بكتابة وصف الإشعار');
+                                                              } else{
+                                                                await controller.getAllSubscriber(controller.filteredTopics.isEmpty
+                                                                    ? item.id!
+                                                                    : controller.filteredTopics[index]
+                                                                    .id!).then((value) async{
+                                                                  for (var i = 0; i < value.length; i++) {
+                                                                    await controller.sendNotification(
+                                                                      to: value[i].deviceToken,
+                                                                      title: controller.titleController.text,
+                                                                      body: controller.bodyController.text,
+                                                                    );
+                                                                    print('value[i].deviceToken');
+                                                                    print(value[i].deviceToken);
+                                                                  }
+                                                                  controller.titleController.clear();
+                                                                  controller.bodyController.clear();
+                                                                  Get.back();
+                                                                });
+                                                              }
+                                                            },
                                                           ),
                                                         ],
                                                       ).marginSymmetric(

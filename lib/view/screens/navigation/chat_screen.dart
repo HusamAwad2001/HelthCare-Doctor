@@ -29,9 +29,9 @@ class ChatScreen extends StatelessWidget {
                       Routes.chatScreen,
                       arguments: controller.chatClients[index],
                     ),
-                    leading: const Icon(
-                      Icons.account_circle_rounded,
-                      size: 45,
+                    leading: Image.asset(
+                        'assets/images/patent_image.png',
+                        width: 40
                     ),
                     title: Text(
                       '${controller.chatClients[index].firstName!} ${controller.chatClients[index].secondName!} ${controller.chatClients[index].firstName!}',
