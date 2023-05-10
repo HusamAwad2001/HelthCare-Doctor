@@ -8,4 +8,5 @@ class Routes {
   static const String updateTopicScreen = '/UpdateTopicScreen';
   static const String topicDetailsScreen = '/TopicDetailsScreen';
   static const String chatScreen = '/ChatScreen';
+  static const String subscribersScreen = '/SubscribersScreen';
 }

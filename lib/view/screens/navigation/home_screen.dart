@@ -1,9 +1,11 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:helth_care_doctor/constants/constants.dart';
 import 'package:helth_care_doctor/controllers/navigation_controller.dart';
+import 'package:helth_care_doctor/services/firestore_helper.dart';
 
 import '../../../../routes/routes.dart';
 import '../../widgets/empty_list.dart';
@@ -110,14 +112,16 @@ class HomeScreen extends GetView<NavigationController> {
                                         controller.filteredTopics.isEmpty
                                             ? item.title
                                             : controller
-                                                .filteredTopics[index].title,
-                                        style:
-                                            const TextStyle(fontFamily: 'Expo'),
+                                                .filteredTopics[index]
+                                                .title,
+                                        style: const TextStyle(
+                                            fontFamily: 'Expo'),
                                       ),
                                       subtitle: Text(
                                         controller.filteredTopics.isEmpty
                                             ? item.description
-                                            : controller.filteredTopics[index]
+                                            : controller
+                                                .filteredTopics[index]
                                                 .description,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
@@ -137,14 +141,16 @@ class HomeScreen extends GetView<NavigationController> {
                                                 dialogType: DialogType.info,
                                                 title: 'حذف ${item.title}',
                                                 desc: 'هل أنت متأكد ؟',
-                                                titleTextStyle: const TextStyle(
+                                                titleTextStyle:
+                                                    const TextStyle(
                                                   fontFamily: 'Expo',
                                                 ),
                                                 buttonsTextStyle:
                                                     const TextStyle(
                                                   fontFamily: 'Expo',
                                                 ),
-                                                descTextStyle: const TextStyle(
+                                                descTextStyle:
+                                                    const TextStyle(
                                                   fontFamily: 'Expo',
                                                 ),
                                                 btnCancelText: 'إلغاء',
@@ -173,10 +179,12 @@ class HomeScreen extends GetView<NavigationController> {
                                               Get.toNamed(
                                                 Routes.updateTopicScreen,
                                                 arguments: controller
-                                                        .filteredTopics.isEmpty
+                                                        .filteredTopics
+                                                        .isEmpty
                                                     ? item
                                                     : controller
-                                                        .filteredTopics[index],
+                                                            .filteredTopics[
+                                                        index],
                                               );
                                             },
                                             child: const Icon(

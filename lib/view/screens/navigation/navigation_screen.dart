@@ -67,7 +67,7 @@ class NavigationScreen extends GetView<NavigationController> {
               BottomNavigationBarItem(
                 icon: Icon(Icons.dashboard_outlined),
                 activeIcon: Icon(Icons.dashboard),
-                label: 'الداشبورد',
+                label: 'لوحة التحكم',
               ),
             ],
           ),

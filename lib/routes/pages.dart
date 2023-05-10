@@ -15,6 +15,7 @@ import '../bindings/topic_details_binding.dart';
 import '../bindings/chat_binding.dart';
 import '../bindings/update_topic_binding.dart';
 import '../view/screens/add_new_topic.dart';
+import '../view/screens/subscribers_screen.dart';
 import '../view/screens/topic_details_screen.dart';
 import '../view/screens/update_topic_screen.dart';
 
@@ -79,6 +80,12 @@ class Pages {
         name: Routes.chatScreen,
         page: () => ChatMessageScreen(),
         binding: ChatBinding(),
+        transition: Transition.fadeIn,
+        curve: Curves.easeIn,
+      ),
+      GetPage(
+        name: Routes.subscribersScreen,
+        page: () => const SubscribersScreen(),
         transition: Transition.fadeIn,
         curve: Curves.easeIn,
       ),

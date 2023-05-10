@@ -6,8 +6,10 @@ import 'package:helth_care_doctor/services/fb_auth_controller.dart';
 import 'package:helth_care_doctor/view/widgets/snack.dart';
 
 import '../models/app_user.dart';
+import '../core/storage.dart';
 import '../models/chat_message.dart';
 import '../models/chat_user.dart';
+import '../models/notification_model.dart';
 import '../models/topic_model.dart';
 import '../routes/routes.dart';
 import '../view/widgets/loading_dialog.dart';
@@ -99,6 +101,31 @@ class FirestoreHelper {
 
   /// ------------------------------------------------------------------------
 
+  Future<List<NotificationModel>> getAllSubscriber(String topicId) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await firebaseFirestore
+              .collection('topics')
+              .doc(topicId)
+              .collection('subscriptions')
+              .get();
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> documents =
+          querySnapshot.docs;
+      List<NotificationModel>? subscribers = documents.map((e) {
+        return NotificationModel.fromJson(e.data());
+      }).toList();
+      return subscribers;
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: e.toString(),
+        toastLength: Toast.LENGTH_LONG,
+      );
+    }
+    return [];
+  }
+
+  /// ------------------------------------------------------------------------
+
   /// Get_All_Doctors
   Future<List<ChatUser>> getAllDoctors() async {
     QuerySnapshot<Map<String, dynamic>> results =
@@ -164,4 +191,73 @@ class FirestoreHelper {
   }
 
   /// ------------------------------------------------------------------------
+
+  Stream<DocumentSnapshot<Object?>>? collectionLikedUsers(String topicId) async*{
+    firebaseFirestore.collection('topics')
+        .doc(topicId)
+        .collection('likedUsers')
+        .doc(FbAuthController().getCurrentUser())
+        .snapshots();
+  }
+
+  /// ------------------------------------------------------------------------
+
+  void addLike(String topicId, bool liked) {
+    liked = !liked;
+    if(liked) {
+      DocumentReference ref = firebaseFirestore.collection('topics')
+          .doc(topicId)
+          .collection('likedUsers')
+          .doc(FbAuthController().getCurrentUser());
+      ref.set({
+        'uid' : FbAuthController().getCurrentUser,
+        'createdAt' : DateTime.now(),
+      });
+    } else {
+      DocumentReference ref = firebaseFirestore.collection('topics')
+          .doc(topicId)
+          .collection('likedUsers')
+          .doc(FbAuthController().getCurrentUser());
+      ref.delete();
+    }
+  }
+
+  /// ----------------------------------------------------------------------
+
+  getClientInfoById() async{
+    try {
+      DocumentSnapshot<Map<String, dynamic>> document =  await firebaseFirestore
+          .collection('doctors')
+          .doc(FbAuthController().getCurrentUser())
+          .get();
+      await Storage.instance.write('user', document.data()!);
+      Storage.getData();
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: e.toString(),
+        toastLength: Toast.LENGTH_LONG,
+      );
+    }
+  }
+
+  /// ----------------------------------------------------------------------
+
+  /// Add_View
+  Future<int?> getViews(TopicModel topic) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> documents = await firebaseFirestore
+          .collection('topics')
+          .doc(topic.id)
+          .collection('views')
+          .get();
+      int views = documents.docs.length;
+      return views;
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: e.toString(),
+        toastLength: Toast.LENGTH_LONG,
+      );
+      return null;
+    }
+  }
 }

@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:helth_care_doctor/constants/app_styles.dart';
+import 'package:helth_care_doctor/constants/constants.dart';
 import 'package:helth_care_doctor/core/global.dart';
 import 'package:helth_care_doctor/services/fbNotifications.dart';
 import 'package:helth_care_doctor/services/firestore_helper.dart';
@@ -9,6 +12,7 @@ import 'package:helth_care_doctor/view/widgets/loading_dialog.dart';
 
 import '../models/chat_message.dart';
 import '../models/chat_user.dart';
+import '../models/notification_model.dart';
 import '../models/topic_model.dart';
 import '../services/fb_auth_controller.dart';
 import 'package:http/http.dart' as http;
@@ -42,6 +46,18 @@ class NavigationController extends GetxController {
     update();
   }
 
+  List<NotificationModel> subscribers = [];
+
+  Future<List<NotificationModel>> getAllSubscriber(String topicId) async {
+    LoadingDialog().dialog();
+    subscribers = await FirestoreHelper.fireStoreHelper.getAllSubscriber(
+      topicId,
+    );
+    update();
+    Get.back();
+    return subscribers;
+  }
+
   Future<void> deleteTopic(TopicModel topic) async {
     LoadingDialog().dialog();
     await FirestoreHelper.fireStoreHelper.deleteTopic(topic);
@@ -72,6 +88,28 @@ class NavigationController extends GetxController {
   getAllClients() async {
     chatClients = await FirestoreHelper.fireStoreHelper.getAllClients();
     update();
+  }
+
+  /// -----------------------------------------------------------------
+
+  getAllViews(context, TopicModel topic) async {
+    LoadingDialog().dialog();
+    await FirestoreHelper.fireStoreHelper.getViews(topic).then((value) {
+      Get.back();
+      AwesomeDialog(
+        context: context,
+        animType: AnimType.scale,
+        dialogType: DialogType.success,
+        dialogBackgroundColor: primaryColor,
+        title: topic.title,
+        desc: value == 0
+            ? 'لم يتم مشاهدة هذا العنوان'
+            : '${value.toString()} من الأشخاص شاهد هذا العنوان',
+        titleTextStyle: getBoldStyle(color: Colors.white, fontSize: 15),
+        descTextStyle: getRegularStyle(color: Colors.white, fontSize: 15),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      ).show();
+    });
   }
 
   /// -----------------------------------------------------------------
