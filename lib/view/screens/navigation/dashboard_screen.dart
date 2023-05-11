@@ -12,6 +12,7 @@ import 'package:helth_care_doctor/view/widgets/snack.dart';
 import 'package:helth_care_doctor/view/widgets/text_field_widget.dart';
 
 import '../../../../routes/routes.dart';
+import '../../../core/global.dart';
 import '../../../models/notification_model.dart';
 import '../../widgets/empty_list.dart';
 

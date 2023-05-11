@@ -11,6 +11,7 @@ import '../models/chat_message.dart';
 import '../models/chat_user.dart';
 import '../models/notification_model.dart';
 import '../models/topic_model.dart';
+import '../models/user_view.dart';
 import '../routes/routes.dart';
 import '../view/widgets/loading_dialog.dart';
 
@@ -243,21 +244,26 @@ class FirestoreHelper {
   /// ----------------------------------------------------------------------
 
   /// Add_View
-  Future<int?> getViews(TopicModel topic) async {
+  Future<List<UserView>> getViews(TopicModel topic) async {
     try {
-      QuerySnapshot<Map<String, dynamic>> documents = await firebaseFirestore
+      QuerySnapshot<Map<String, dynamic>> querySnapshot = await firebaseFirestore
           .collection('topics')
           .doc(topic.id)
           .collection('views')
           .get();
-      int views = documents.docs.length;
-      return views;
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> documents =
+          querySnapshot.docs;
+      List<UserView>? usersView = documents.map((e) {
+        print(e.data());
+        return UserView.fromJson(e.data());
+      }).toList();
+      return usersView;
     } catch (e) {
       Fluttertoast.showToast(
         msg: e.toString(),
         toastLength: Toast.LENGTH_LONG,
       );
-      return null;
     }
+    return [];
   }
 }
