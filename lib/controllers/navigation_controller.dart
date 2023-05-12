@@ -126,28 +126,43 @@ class NavigationController extends GetxController {
           height: Get.height / 2,
           child: value.isEmpty
               ? const Center(child: Text('لم يتم مشاهدة هذا العنوان'))
-              : ListView.builder(
-                  padding: const EdgeInsets.all(10),
-                  itemCount: usersView.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      onTap: () {
-                        Get.toNamed(
-                          Routes.profileScreen,
-                          arguments: usersView[index],
-                        );
-                      },
-                      leading: const Icon(Icons.person_pin, size: 50),
-                      title: Text(
-                        usersView[index].name,
-                        style: const TextStyle(fontFamily: 'Expo'),
+              : Column(
+                  children: [
+                    Text(
+                      'تمت المشاهدة من',
+                      style: getBoldStyle(color: Colors.black),
+                    ).paddingOnly(top: 20),
+                    Expanded(
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        padding: const EdgeInsets.all(15),
+                        itemCount: usersView.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            onTap: () {
+                              Get.toNamed(
+                                Routes.profileScreen,
+                                arguments: usersView[index],
+                              );
+                            },
+                            leading: const Icon(
+                              Icons.person_pin,
+                              size: 50,
+                              color: primaryColor,
+                            ),
+                            title: Text(
+                              usersView[index].name,
+                              style: const TextStyle(fontFamily: 'Expo'),
+                            ),
+                            subtitle: Text(
+                              usersView[index].phone,
+                              style: const TextStyle(fontFamily: 'Expo'),
+                            ),
+                          );
+                        },
                       ),
-                      subtitle: Text(
-                        usersView[index].email,
-                        style: const TextStyle(fontFamily: 'Expo'),
-                      ),
-                    );
-                  },
+                    ),
+                  ],
                 ),
         ),
       );

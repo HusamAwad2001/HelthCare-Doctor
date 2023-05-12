@@ -39,73 +39,72 @@ class NavigationScreen extends GetView<NavigationController> {
           ),
           drawer: Drawer(
             width: (Get.width / 3) * 2,
-            child: SafeArea(
-              child: Column(
-                children: [
-                  const SizedBox(height: 50),
-                  CircleAvatar(
+            child: Column(
+              children: [
+                Container(
+                  height: 200,
+                  color: primaryColor,
+                  alignment: Alignment.center,
+                  child: CircleAvatar(
                     radius: 40,
-                    backgroundColor: primaryColor,
+                    backgroundColor: Colors.white,
                     child: Text(
                       Global.user['firstName'],
                       style: const TextStyle(
                           fontFamily: 'Expo',
                           fontWeight: FontWeight.w700,
                           fontSize: 16,
-                          color: Colors.white),
+                          color: Colors.black),
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  ListTile(
-                    leading: const Icon(Icons.person_pin, size: 30),
-                    title: Text(
-                      '${Global.user['firstName']} ${Global.user['secondName']} ${Global.user['familyName']}',
-                      style: const TextStyle(fontFamily: 'Expo', fontSize: 12),
-                    ),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.person_pin, size: 30),
+                  title: Text(
+                    '${Global.user['firstName']} ${Global.user['secondName']} ${Global.user['familyName']}',
+                    style: const TextStyle(fontFamily: 'Expo', fontSize: 12),
                   ),
-                  const SizedBox(height: 15),
-                  ListTile(
-                    leading: const Icon(Icons.email, size: 30),
-                    title: Text(
-                      Global.user['email'],
-                      style: const TextStyle(fontFamily: 'Expo', fontSize: 12),
-                    ),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.email, size: 30),
+                  title: Text(
+                    Global.user['email'],
+                    style: const TextStyle(fontFamily: 'Expo', fontSize: 12),
                   ),
-                  const SizedBox(height: 15),
-                  ListTile(
-                    leading: const Icon(Icons.phone, size: 30),
-                    title: Text(
-                      Global.user['phone'],
-                      style: const TextStyle(fontFamily: 'Expo', fontSize: 12),
-                    ),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.phone, size: 30),
+                  title: Text(
+                    Global.user['phone'],
+                    style: const TextStyle(fontFamily: 'Expo', fontSize: 12),
                   ),
-                  const Spacer(),
-                  ButtonWidget(
-                    width: Get.width,
-                    onPressed: () {
-                      AwesomeDialog(
-                        context: context,
-                        animType: AnimType.scale,
-                        dialogType: DialogType.success,
-                        dialogBackgroundColor: primaryColor,
-                        title: 'تسجيل الخروج',
-                        desc: 'هل أنت متأكد؟',
-                        titleTextStyle: getBoldStyle(color: Colors.white, fontSize: 15),
-                        descTextStyle: getRegularStyle(color: Colors.white, fontSize: 15),
-                        buttonsTextStyle: getRegularStyle(color: Colors.white, fontSize: 15),
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                        btnOkOnPress: () => AuthController().logout(),
-                        btnOkText: 'نعم',
-                        btnCancelOnPress: (){},
-                        btnCancelText: 'لا',
-                      ).show();
-                    },
-                    color: Colors.red,
-                    label: 'تسجيل الخروج',
-                  ).paddingSymmetric(horizontal: 25),
-                  const SizedBox(height: 30),
-                ],
-              ),
+                ),
+                const Spacer(),
+                ButtonWidget(
+                  width: Get.width,
+                  onPressed: () {
+                    AwesomeDialog(
+                      context: context,
+                      animType: AnimType.scale,
+                      dialogType: DialogType.success,
+                      dialogBackgroundColor: primaryColor,
+                      title: 'تسجيل الخروج',
+                      desc: 'هل أنت متأكد؟',
+                      titleTextStyle: getBoldStyle(color: Colors.white, fontSize: 15),
+                      descTextStyle: getRegularStyle(color: Colors.white, fontSize: 15),
+                      buttonsTextStyle: getRegularStyle(color: Colors.white, fontSize: 15),
+                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      btnOkOnPress: () => AuthController().logout(),
+                      btnOkText: 'نعم',
+                      btnCancelOnPress: (){},
+                      btnCancelText: 'لا',
+                    ).show();
+                  },
+                  color: Colors.red,
+                  label: 'تسجيل الخروج',
+                ).paddingSymmetric(horizontal: 25),
+                const SizedBox(height: 30),
+              ],
             ),
           ),
           body: IndexedStack(

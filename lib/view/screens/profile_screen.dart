@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:helth_care_doctor/models/user_view.dart';
+import 'package:intl/intl.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -20,46 +21,39 @@ class ProfileScreen extends StatelessWidget {
         elevation: 0,
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        // mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ListTile(
-            leading: const Icon(Icons.person_pin, size: 50),
+            leading: const Icon(Icons.person_pin, size: 40),
             title: Text(
               userView.name,
-              style: const TextStyle(fontFamily: 'Expo'),
+              style: const TextStyle(fontFamily: 'Expo', fontSize: 14),
             ),
           ),
-          const SizedBox(height: 15),
           ListTile(
-            leading: const Icon(Icons.keyboard_hide, size: 50),
-            title: Text(
-              userView.uid,
-              style: const TextStyle(fontFamily: 'Expo'),
-            ),
-          ),
-          const SizedBox(height: 15),
-          ListTile(
-            leading: const Icon(Icons.email, size: 50),
+            leading: const Icon(Icons.email, size: 40),
             title: Text(
               userView.email,
-              style: const TextStyle(fontFamily: 'Expo'),
+              style: const TextStyle(fontFamily: 'Expo', fontSize: 14),
             ),
           ),
-          const SizedBox(height: 15),
           ListTile(
-            leading: const Icon(Icons.phone, size: 50),
+            leading: const Icon(Icons.phone, size: 40),
             title: Text(
               userView.phone,
-              style: const TextStyle(fontFamily: 'Expo'),
+              style: const TextStyle(fontFamily: 'Expo', fontSize: 14),
             ),
           ),
-          const SizedBox(height: 15),
           ListTile(
-            leading: const Icon(Icons.timer, size: 50),
+            leading: const Icon(Icons.timer, size: 40),
             title: Text(
-              userView.dateTime.toString(),
-              style: const TextStyle(fontFamily: 'Expo'),
+              DateFormat.yMd().format(DateTime.parse(userView.dateTime)),
+              style: const TextStyle(fontFamily: 'Expo', fontSize: 14),
+            ),
+            subtitle: Text(
+              DateFormat.jm().format(DateTime.parse(userView.dateTime)),
+              style: const TextStyle(fontFamily: 'Expo', fontSize: 14),
             ),
           ),
         ],

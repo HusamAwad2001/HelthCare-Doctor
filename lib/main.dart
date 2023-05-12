@@ -20,10 +20,10 @@ void main() async {
   await GetStorage.init();
   await FbNotifications.init();
   // await FbNotifications.showNotification(title: 'title', body: 'body');
-  await FbNotifications().getDeviceToken().then((value) async{
-    Storage.instance.write('deviceToken', value.toString());
-  });
-  await FirestoreHelper.fireStoreHelper.getClientInfoById();
+  // await FbNotifications().getDeviceToken().then((value) async{
+  //   Storage.instance.write('deviceToken', value.toString());
+  // });
+  // await FirestoreHelper.fireStoreHelper.getClientInfoById();
   Storage.getData();
   print('Global.user');
   print(Global.user);

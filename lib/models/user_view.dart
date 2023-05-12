@@ -3,7 +3,7 @@ class UserView {
   String name;
   String email;
   String phone;
-  var dateTime;
+  String dateTime;
 
   UserView({
     required this.uid,
