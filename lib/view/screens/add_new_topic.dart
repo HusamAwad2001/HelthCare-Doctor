@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:helth_care_doctor/controllers/add_new_topic_controller.dart';
-import 'package:video_player/video_player.dart';
+
 import '../../constants/app_styles.dart';
 import '../../constants/constants.dart';
 import '../widgets/button_widget.dart';
@@ -89,6 +89,7 @@ class AddNewTopicScreen extends GetView<AddNewTopicController> {
                 TextFieldWidget(
                   controller: controller.descriptionController,
                   hintText: 'الوصف',
+                  maxLines: 3,
                 ),
                 const SizedBox(height: 20),
                 const Divider(thickness: 2),
@@ -174,6 +175,7 @@ class AddNewTopicScreen extends GetView<AddNewTopicController> {
                     ? TextFieldWidget(
                         controller: controller.informationController,
                         hintText: 'البيانات',
+                        maxLines: 5,
                       )
                     : controller.typeOfInformation == 'Image'
                         ? GestureDetector(
@@ -229,27 +231,26 @@ class AddNewTopicScreen extends GetView<AddNewTopicController> {
                                 ],
                               ),
                               child: GetBuilder<AddNewTopicController>(
-                                builder: (_) {
-                                  return controller.videoInfoFile == null
-                                      ? Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: const [
-                                            Text(
-                                              'اختر فيديو',
-                                              style: TextStyle(
-                                                fontFamily: 'Expo',
-                                                fontSize: 18,
-                                              ),
+                                  builder: (_) {
+                                return controller.videoInfoFile == null
+                                    ? Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: const [
+                                          Text(
+                                            'اختر فيديو',
+                                            style: TextStyle(
+                                              fontFamily: 'Expo',
+                                              fontSize: 18,
                                             ),
-                                            SizedBox(width: 10),
-                                            Icon(Icons.video_library,
-                                                color: Colors.red),
-                                          ],
-                                        )
-                                      : Text(controller.videoNameFile!);
-                                }
-                              ),
+                                          ),
+                                          SizedBox(width: 10),
+                                          Icon(Icons.video_library,
+                                              color: Colors.red),
+                                        ],
+                                      )
+                                    : Text(controller.videoNameFile!);
+                              }),
                             ),
                           ),
                 const SizedBox(height: 40),

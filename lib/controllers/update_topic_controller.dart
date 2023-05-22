@@ -1,10 +1,8 @@
 import 'dart:io';
 
 import 'package:chewie/chewie.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:helth_care_doctor/routes/routes.dart';
 import 'package:helth_care_doctor/view/widgets/loading_dialog.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
@@ -76,25 +74,25 @@ class UpdateTopicController extends GetxController {
     String? imageUrl;
     if (imageFile != null) {
       imageUrl = await StorageHelper.instance.uploadImage(imageFile!);
-    }else{
+    } else {
       imageUrl = argument.image;
     }
     if (typeOfInformation == "Text") {
       if (informationController.text.isNotEmpty) {
         information = informationController.text;
-      }else{
+      } else {
         information = argument.information;
       }
     } else if (typeOfInformation == "Image") {
       if (imageInfoFile != null) {
         information = await StorageHelper.instance.uploadImage(imageInfoFile!);
-      }else{
+      } else {
         imageUrl = imageLink;
       }
     } else {
       if (videoInfoFile != null) {
         information = await StorageHelper.instance.uploadImage(videoInfoFile!);
-      }else{
+      } else {
         imageUrl = videoLink;
       }
     }
@@ -108,7 +106,6 @@ class UpdateTopicController extends GetxController {
       hidden: hidden,
     );
     await FirestoreHelper.fireStoreHelper.updateTopic(newTopic);
-    // Get.offAll(Routes.navigationScreen);
     Get.back();
     update();
   }
@@ -117,9 +114,11 @@ class UpdateTopicController extends GetxController {
     FocusManager.instance.primaryFocus?.unfocus();
     if (imageFile != null || argument.image != null) {
       if (titleController.text.isNotEmpty || argument.title != null) {
-        if (descriptionController.text.isNotEmpty || argument.description != null) {
+        if (descriptionController.text.isNotEmpty ||
+            argument.description != null) {
           if (typeOfInformation == "Text") {
-            if (informationController.text.isNotEmpty || argument.information != null) {
+            if (informationController.text.isNotEmpty ||
+                argument.information != null) {
               // information = informationController.text;
               addNewTopic();
             } else {

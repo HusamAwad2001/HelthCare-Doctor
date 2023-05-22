@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../constants/app_styles.dart';
 
 class TextFieldWidget extends StatelessWidget {
@@ -9,6 +10,7 @@ class TextFieldWidget extends StatelessWidget {
   final bool isPassword;
   final bool enabled;
   final Function()? onTap;
+  final int? maxLines;
 
   const TextFieldWidget({
     Key? key,
@@ -19,6 +21,7 @@ class TextFieldWidget extends StatelessWidget {
     this.isPassword = false,
     this.enabled = true,
     this.onTap,
+    this.maxLines,
   }) : super(key: key);
 
   @override
@@ -33,6 +36,7 @@ class TextFieldWidget extends StatelessWidget {
             appBoxShadow(offsetY: 0, blurRadius: 2),
           ],
         ),
+        alignment: Alignment.center,
         child: TextFormField(
           controller: controller,
           obscureText: isPassword,
@@ -40,8 +44,9 @@ class TextFieldWidget extends StatelessWidget {
           enabled: enabled,
           textAlign: TextAlign.center,
           style: const TextStyle(fontFamily: 'Expo'),
+          maxLines: maxLines ?? 1,
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.zero,
+            contentPadding: const EdgeInsets.all(5),
             hintText: hintText,
             border: InputBorder.none,
             enabledBorder: OutlineInputBorder(

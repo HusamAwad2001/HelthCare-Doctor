@@ -67,8 +67,7 @@ class FbAuthController {
   }) async {
     LoadingDialog().dialog();
     try {
-      await _auth
-          .signInWithEmailAndPassword(
+      await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -89,8 +88,6 @@ class FbAuthController {
       Storage.instance.write("isLogged", Global.isLogged);
       Storage.instance.write("user", Global.user);
       Get.offAllNamed(Routes.navigationScreen);
-      print('Routes.navigationScreen');
-      print(Global.user);
       return true;
     } on FirebaseAuthException catch (e) {
       Get.back();

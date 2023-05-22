@@ -1,7 +1,7 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:helth_care_doctor/models/topic_model.dart';
+
 import '../../constants/app_styles.dart';
 import '../../constants/constants.dart';
 import '../../controllers/update_topic_controller.dart';
@@ -91,6 +91,7 @@ class UpdateTopicScreen extends GetView<UpdateTopicController> {
                 TextFieldWidget(
                   controller: controller.descriptionController,
                   hintText: 'الوصف',
+                  maxLines: 3,
                 ),
                 const SizedBox(height: 20),
                 const Divider(thickness: 2),
@@ -176,6 +177,7 @@ class UpdateTopicScreen extends GetView<UpdateTopicController> {
                     ? TextFieldWidget(
                         controller: controller.informationController,
                         hintText: 'البيانات',
+                        maxLines: 5,
                       )
                     : controller.typeOfInformation == 'Image'
                         ? GestureDetector(
@@ -197,26 +199,30 @@ class UpdateTopicScreen extends GetView<UpdateTopicController> {
                                         fit: BoxFit.cover,
                                       )
                                     : DecorationImage(
-                                  image: NetworkImage(controller.imageLink),
-                                  fit: BoxFit.cover,
-                                ),
+                                        image:
+                                            NetworkImage(controller.imageLink),
+                                        fit: BoxFit.cover,
+                                      ),
                               ),
                               child: controller.imageInfoFile == null
-                                  ? controller.argument != null ? null : Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: const [
-                                        Text(
-                                          'اختر صورة',
-                                          style: TextStyle(
-                                            fontFamily: 'Expo',
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                        SizedBox(width: 10),
-                                        Icon(Icons.image, color: primaryColor),
-                                      ],
-                                    )
+                                  ? controller.argument != null
+                                      ? null
+                                      : Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: const [
+                                            Text(
+                                              'اختر صورة',
+                                              style: TextStyle(
+                                                fontFamily: 'Expo',
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                            SizedBox(width: 10),
+                                            Icon(Icons.image,
+                                                color: primaryColor),
+                                          ],
+                                        )
                                   : null,
                             ),
                           )
@@ -234,30 +240,35 @@ class UpdateTopicScreen extends GetView<UpdateTopicController> {
                                 ],
                               ),
                               child: GetBuilder<UpdateTopicController>(
-                                  builder: (_) {
-                                return controller.videoInfoFile == null
-                                    ? controller.argument!= null
-                                        ? controller.controller!.value.isInitialized
-                                          ? Chewie(controller:controller.chewieController!)
-                                          : const Center(child: CircularProgressIndicator())
-                                        : Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: const [
-                                          Text(
-                                            'اختر فيديو',
-                                            style: TextStyle(
-                                              fontFamily: 'Expo',
-                                              fontSize: 18,
-                                            ),
-                                          ),
-                                          SizedBox(width: 10),
-                                          Icon(Icons.video_library,
-                                              color: Colors.red),
-                                        ],
-                                      )
-                                    : Text(controller.videoNameFile!);
-                              },
+                                builder: (_) {
+                                  return controller.videoInfoFile == null
+                                      ? controller.argument != null
+                                          ? controller.controller!.value
+                                                  .isInitialized
+                                              ? Chewie(
+                                                  controller: controller
+                                                      .chewieController!)
+                                              : const Center(
+                                                  child:
+                                                      CircularProgressIndicator())
+                                          : Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: const [
+                                                Text(
+                                                  'اختر فيديو',
+                                                  style: TextStyle(
+                                                    fontFamily: 'Expo',
+                                                    fontSize: 18,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 10),
+                                                Icon(Icons.video_library,
+                                                    color: Colors.red),
+                                              ],
+                                            )
+                                      : Text(controller.videoNameFile!);
+                                },
                               ),
                             ),
                           ),

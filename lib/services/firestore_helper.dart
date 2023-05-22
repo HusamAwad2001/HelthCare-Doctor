@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:helth_care_doctor/controllers/navigation_controller.dart';
 import 'package:helth_care_doctor/services/fb_auth_controller.dart';
 import 'package:helth_care_doctor/view/widgets/snack.dart';
 
-import '../models/app_user.dart';
 import '../core/storage.dart';
+import '../models/app_user.dart';
 import '../models/chat_message.dart';
 import '../models/chat_user.dart';
 import '../models/notification_model.dart';
@@ -89,10 +88,15 @@ class FirestoreHelper {
 
   /// Update_One_Topic
   Future<void> updateTopic(TopicModel topic) async {
-    await firebaseFirestore
-        .collection('topics')
-        .doc(topic.id)
-        .update(topic.toJson());
+    try {
+      await firebaseFirestore
+          .collection('topics')
+          .doc(topic.id)
+          .update(topic.toJson());
+      Get.offAllNamed(Routes.navigationScreen);
+    } catch (e) {
+      Snack().show(type: false, message: e.toString());
+    }
   }
 
   /// Delete_One_Topic
@@ -193,29 +197,21 @@ class FirestoreHelper {
 
   /// ------------------------------------------------------------------------
 
-  Stream<DocumentSnapshot<Object?>>? collectionLikedUsers(String topicId) async*{
-    firebaseFirestore.collection('topics')
-        .doc(topicId)
-        .collection('likedUsers')
-        .doc(FbAuthController().getCurrentUser())
-        .snapshots();
-  }
-
-  /// ------------------------------------------------------------------------
-
   void addLike(String topicId, bool liked) {
     liked = !liked;
-    if(liked) {
-      DocumentReference ref = firebaseFirestore.collection('topics')
+    if (liked) {
+      DocumentReference ref = firebaseFirestore
+          .collection('topics')
           .doc(topicId)
           .collection('likedUsers')
           .doc(FbAuthController().getCurrentUser());
       ref.set({
-        'uid' : FbAuthController().getCurrentUser,
-        'createdAt' : DateTime.now(),
+        'uid': FbAuthController().getCurrentUser,
+        'createdAt': DateTime.now(),
       });
     } else {
-      DocumentReference ref = firebaseFirestore.collection('topics')
+      DocumentReference ref = firebaseFirestore
+          .collection('topics')
           .doc(topicId)
           .collection('likedUsers')
           .doc(FbAuthController().getCurrentUser());
@@ -225,9 +221,9 @@ class FirestoreHelper {
 
   /// ----------------------------------------------------------------------
 
-  getClientInfoById() async{
+  Future<void> getClientInfoById() async {
     try {
-      DocumentSnapshot<Map<String, dynamic>> document =  await firebaseFirestore
+      DocumentSnapshot<Map<String, dynamic>> document = await firebaseFirestore
           .collection('doctors')
           .doc(FbAuthController().getCurrentUser())
           .get();
@@ -246,11 +242,12 @@ class FirestoreHelper {
   /// Add_View
   Future<List<UserView>> getViews(TopicModel topic) async {
     try {
-      QuerySnapshot<Map<String, dynamic>> querySnapshot = await firebaseFirestore
-          .collection('topics')
-          .doc(topic.id)
-          .collection('views')
-          .get();
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await firebaseFirestore
+              .collection('topics')
+              .doc(topic.id)
+              .collection('views')
+              .get();
       List<QueryDocumentSnapshot<Map<String, dynamic>>> documents =
           querySnapshot.docs;
       List<UserView>? usersView = documents.map((e) {
